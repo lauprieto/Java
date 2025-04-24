@@ -1,23 +1,21 @@
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
                 git 'https://github.com/lauprieto/Java.git'
             }
         }
-
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean package'
             }
         }
-
-        stage('Run Tests') {
+        stage('Test') {
             steps {
                 sh 'mvn test'
             }
         }
     }
 }
+
