@@ -7,16 +7,21 @@ pipeline {
                 git 'https://github.com/lauprieto/Java.git'
             }
         }
-
+        
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                // Ejecutar el comando de Maven para limpiar y compilar el proyecto
+                bat 'mvn clean install'
+
+                // Si el comando de build ya incluye el paquete, no es necesario el siguiente paso.
+                bat 'mvn clean package'
             }
         }
 
-        stage('Run Tests') {
+        stage('Test') {
             steps {
-                sh 'mvn test'
+                // Ejecutar los tests de Maven
+                bat 'mvn test'
             }
         }
     }
