@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'agent2' }
 
     stages {
         stage('Checkout') {
@@ -10,13 +10,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh './gradlew build' 
+                sh 'mvn clean install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh './gradlew test' 
+                sh 'mvn test'
             }
         }
     }
