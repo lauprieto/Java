@@ -1,27 +1,23 @@
 pipeline {
-    agent { label 'agent2' }
+    agent any
 
     stages {
-        stage('Checkout') {
+        stage('Descargar código') {
             steps {
-                git 'https://github.com/lauprieto/Java.git'
+                git url: 'https://github.com/lauprieto/Java.git'
             }
         }
 
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('Test') {
+        stage('Ejecutar pruebas') {
             steps {
                 sh 'mvn test'
             }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+        }
+
+        stage('Build con agent2') {
+            agent { label 'agent2' }
+            steps {
+                sh 'mvn clean package'
             }
         }
     }
